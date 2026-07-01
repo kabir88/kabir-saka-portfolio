@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kabir Saka, Full-Stack Developer and AI Engineer</title>
+  <meta name="description" content="Full-Stack Developer and AI Engineer building production-ready web apps and intelligent tools." />
+  <meta property="og:title" content="Kabir Saka, Full-Stack Developer and AI Engineer" />
+  <meta property="og:description" content="I build production-ready web applications and AI-powered tools." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+            display: ['Syne', 'ui-sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    .gradient-text {
+      background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #4f46e5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,58,237,0.2);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      background: rgba(124, 58, 237, 0.08);
+      border: 1px solid rgba(124, 58, 237, 0.22);
+      color: #a78bfa;
+    }
+
+    .glow {
+      box-shadow: 0 0 48px rgba(124, 58, 237, 0.25);
+    }
+
+    @keyframes bounce-gentle {
+      0%, 100% { transform: translateY(0) translateX(-50%); }
+      50% { transform: translateY(6px) translateX(-50%); }
+    }
+
+    .bounce-gentle {
+      animation: bounce-gentle 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .pulse-dot {
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skill-card {
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .skill-card:hover {
+      border-color: rgba(124, 58, 237, 0.35);
+      background: rgba(124, 58, 237, 0.04);
+    }
+
+    /* Orb background */
+    .orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased" style="selection-color:#7c3aed">
+
+  <!-- ══════════════════════════════════════ NAV ══════════════════════════════════════ -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-zinc-800/50 backdrop-blur-xl bg-zinc-950/80">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#home" class="font-display text-xl font-bold text-white tracking-tight">
+        KS<span class="text-violet-400">.</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#work" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors duration-150">Work</a>
+        <a href="#skills" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors duration-150">Skills</a>
+        <a href="#contact" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors duration-150">Contact</a>
+        <a href="mailto:sakakabir88@gmail.com"
+           class="text-sm font-semibold px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white transition-colors duration-150">
+          Hire me
+        </a>
+      </div>
+
+      <button id="mobile-menu-btn" class="md:hidden p-2 -mr-2 text-zinc-400 hover:text-white" aria-label="Toggle menu">
+        <svg id="icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-800/50 px-6 pb-5">
+      <div class="flex flex-col gap-1 pt-4">
+        <a href="#work" class="text-sm font-medium text-zinc-400 hover:text-white py-2 transition-colors">Work</a>
+        <a href="#skills" class="text-sm font-medium text-zinc-400 hover:text-white py-2 transition-colors">Skills</a>
+        <a href="#contact" class="text-sm font-medium text-zinc-400 hover:text-white py-2 transition-colors">Contact</a>
+        <a href="mailto:sakakabir88@gmail.com" class="mt-2 text-sm font-semibold px-4 py-2.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white transition-colors text-center">
+          Hire me
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════ HERO ══════════════════════════════════════ -->
+  <section id="home" class="relative min-h-screen flex flex-col items-center justify-center px-6 pt-16 overflow-hidden">
+
+    <!-- Background orbs -->
+    <div class="orb w-[600px] h-[600px] bg-violet-700/8 -top-48 -right-48"></div>
+    <div class="orb w-[500px] h-[500px] bg-indigo-700/6 top-1/2 -left-64 -translate-y-1/2"></div>
+    <div class="orb w-[400px] h-[400px] bg-purple-700/6 -bottom-32 right-1/3"></div>
+
+    <div class="relative max-w-4xl mx-auto text-center">
+      <!-- Available badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/6 text-emerald-400 text-xs font-semibold mb-8 tracking-wide">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
+        Available for new projects
+      </div>
+
+      <!-- Name -->
+      <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight leading-none mb-5">
+        Kabir Saka
+      </h1>
+
+      <!-- Title -->
+      <p class="text-xl md:text-2xl font-medium mb-6">
+        <span class="gradient-text">Full-Stack Developer</span>
+        <span class="text-zinc-600"> and </span>
+        <span class="text-zinc-300">AI Engineer</span>
+      </p>
+
+      <!-- Bio -->
+      <p class="text-base md:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-10">
+        I build production-ready web applications and AI-powered tools, from nightlife event platforms to intelligent business audits. Focused on clean code, real results, and great user experiences.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-16">
+        <a href="#work"
+           class="px-6 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm transition-all duration-200 hover:scale-105 active:scale-95">
+          View my work
+        </a>
+        <a href="mailto:sakakabir88@gmail.com"
+           class="px-6 py-3 rounded-xl border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-semibold text-sm transition-all duration-200 hover:scale-105 active:scale-95">
+          Get in touch
+        </a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-3 gap-0 max-w-xs mx-auto border border-zinc-800 rounded-2xl overflow-hidden bg-zinc-900/40">
+        <div class="text-center px-4 py-5">
+          <div class="text-2xl font-bold text-white font-display">8+</div>
+          <div class="text-[11px] text-zinc-500 mt-1 leading-tight">Projects<br/>shipped</div>
+        </div>
+        <div class="text-center px-4 py-5 border-l border-r border-zinc-800">
+          <div class="text-2xl font-bold text-white font-display">4</div>
+          <div class="text-[11px] text-zinc-500 mt-1 leading-tight">Client<br/>sites</div>
+        </div>
+        <div class="text-center px-4 py-5">
+          <div class="text-2xl font-bold text-white font-display">3+</div>
+          <div class="text-[11px] text-zinc-500 mt-1 leading-tight">AI tools<br/>built</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="bounce-gentle absolute bottom-8 left-1/2">
+      <div class="flex flex-col items-center gap-1 text-zinc-700">
+        <span class="text-[10px] uppercase tracking-widest">scroll</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ PROJECTS ══════════════════════════════════════ -->
+  <section id="work" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-5 h-px bg-violet-500"></div>
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-widest">Selected work</span>
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-white leading-tight">Projects</h2>
+        <p class="text-zinc-400 mt-3 max-w-lg text-base leading-relaxed">
+          Client websites and personal builds: full-stack platforms, AI tools, SaaS products, and data visualisations.
+        </p>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="reveal flex items-center gap-2 mb-10" id="filter-tabs">
+        <button data-filter="all"
+          class="filter-btn active px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-violet-600 text-white">
+          All <span class="ml-1.5 text-xs font-normal opacity-70">8</span>
+        </button>
+        <button data-filter="client"
+          class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-zinc-400 hover:text-white border border-zinc-800 hover:border-zinc-600">
+          Client Work <span class="ml-1.5 text-xs font-normal opacity-70">4</span>
+        </button>
+        <button data-filter="personal"
+          class="filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-zinc-400 hover:text-white border border-zinc-800 hover:border-zinc-600">
+          Personal <span class="ml-1.5 text-xs font-normal opacity-70">4</span>
+        </button>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6" id="projects-grid">
+
+        <!-- ─── AFTR ─── -->
+        <div class="project-card reveal rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex flex-col" data-category="client">
+          <div class="relative h-52 overflow-hidden flex-shrink-0"
+               style="background: linear-gradient(135deg, #13012b 0%, #2a094d 40%, #4a1078 70%, #6d28d9 100%);">
+            <!-- Decorative glow circles -->
+            <div class="absolute -bottom-8 -right-8 w-48 h-48 rounded-full bg-violet-600/15 blur-2xl"></div>
+            <div class="absolute -top-4 -left-4 w-32 h-32 rounded-full bg-pink-600/10 blur-2xl"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-center">
+                <div class="text-7xl font-display font-black tracking-widest select-none"
+                     style="color: rgba(255,255,255,0.06)">AFTR</div>
+                <div class="flex items-center justify-center gap-3 mt-3">
+                  <span class="w-2 h-2 rounded-full bg-violet-400 pulse-dot"></span>
+                  <span class="w-2 h-2 rounded-full bg-pink-400 pulse-dot" style="animation-delay:0.4s"></span>
+                  <span class="w-2 h-2 rounded-full bg-indigo-400 pulse-dot" style="animation-delay:0.8s"></span>
+                </div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
+            <div class="absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-bold bg-violet-600/85 text-white backdrop-blur-sm tracking-wide">
+              CLIENT PROJECT
+            </div>
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 backdrop-blur-sm border border-zinc-700/50">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] text-zinc-300 font-medium">Live</span>
+            </div>
+          </div>
+
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-display font-bold text-white mb-2">After Dark Socials (AFTR)</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed mb-5 flex-1">
+              Full-stack event &amp; ticketing platform for a Mauritius nightlife brand. Features event listings, a WhatsApp-based payment flow, QR-code entry scanning, GSAP animations, and a complete admin panel for order and event management.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="tag">Next.js 14</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">Drizzle ORM</span>
+              <span class="tag">Redis</span>
+              <span class="tag">GSAP</span>
+              <span class="tag">Cloudflare R2</span>
+            </div>
+            <a href="http://aftr-the-rave.replit.app/" target="_blank" rel="noopener noreferrer"
+               class="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors inline-flex items-center gap-1.5">
+              Live demo
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── THE FACE CLINIC ─── -->
+        <div class="project-card reveal rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex flex-col" data-category="client" style="transition-delay:0.08s">
+          <div class="relative h-52 overflow-hidden flex-shrink-0"
+               style="background: linear-gradient(135deg, #1a0010 0%, #3d0024 40%, #70004a 70%, #a0006a 100%);">
+            <div class="absolute -bottom-8 -right-8 w-48 h-48 rounded-full bg-pink-500/12 blur-2xl"></div>
+            <div class="absolute -top-4 -left-4 w-32 h-32 rounded-full bg-rose-500/10 blur-2xl"></div>
+            <div class="absolute inset-0 flex items-center justify-center select-none">
+              <div class="text-center">
+                <div class="text-3xl font-display font-black tracking-wider" style="color:rgba(255,255,255,0.06)">THE FACE</div>
+                <div class="text-4xl font-display font-black tracking-wider" style="color:rgba(255,100,160,0.12)">CLINIC</div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
+            <div class="absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-bold bg-pink-700/80 text-white backdrop-blur-sm tracking-wide">
+              CLIENT PROJECT
+            </div>
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 backdrop-blur-sm border border-zinc-700/50">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] text-zinc-300 font-medium">Live</span>
+            </div>
+          </div>
+
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-display font-bold text-white mb-2">The Face Clinic</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed mb-5 flex-1">
+              Marketing website for a Mauritius-based medical aesthetic clinic led by Dr. Nooreen Nunnoo. Features treatment showcases (fillers, Botox, PDO threads, IV drips), a before-and-after gallery, patient concierge for international clients, and social media integration.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="tag">Web Design</span>
+              <span class="tag">Client Site</span>
+              <span class="tag">Mauritius</span>
+            </div>
+            <a href="https://thefaceclinic.mu" target="_blank" rel="noopener noreferrer"
+               class="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors inline-flex items-center gap-1.5">
+              Visit site
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── AURA CAPITAL PARTNERS ─── -->
+        <div class="project-card reveal rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex flex-col" data-category="client" style="transition-delay:0.16s">
+          <div class="relative h-52 overflow-hidden flex-shrink-0"
+               style="background: linear-gradient(135deg, #0d0a00 0%, #2a2000 40%, #4a3800 70%, #6b5200 100%);">
+            <div class="absolute -bottom-8 -right-8 w-48 h-48 rounded-full bg-yellow-600/10 blur-2xl"></div>
+            <div class="absolute inset-0 flex items-center justify-center select-none">
+              <div class="text-center">
+                <div class="text-4xl font-display font-black tracking-wider" style="color:rgba(255,255,255,0.05)">AURA</div>
+                <div class="text-3xl font-display font-black tracking-wider mt-1" style="color:rgba(212,175,55,0.12)">CAPITAL</div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
+            <div class="absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-800/80 text-white backdrop-blur-sm tracking-wide">
+              CLIENT PROJECT
+            </div>
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 backdrop-blur-sm border border-zinc-700/50">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] text-zinc-300 font-medium">Live</span>
+            </div>
+          </div>
+
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-display font-bold text-white mb-2">Aura Capital Partners</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed mb-5 flex-1">
+              Corporate website for a strategic gold mining investment firm operating across Africa, the Middle East, and the Americas. Clean, authoritative design covering four service verticals: investment, financial advisory, restructuring, and contract mining.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="tag">Web Design</span>
+              <span class="tag">Client Site</span>
+              <span class="tag">Finance</span>
+            </div>
+            <a href="https://aura-cp.com" target="_blank" rel="noopener noreferrer"
+               class="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors inline-flex items-center gap-1.5">
+              Visit site
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── INNOHEALTH SYSTEMS ─── -->
+        <div class="project-card reveal rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex flex-col" data-category="client" style="transition-delay:0.24s">
+          <div class="relative h-52 overflow-hidden flex-shrink-0"
+               style="background: linear-gradient(135deg, #001a1a 0%, #003333 40%, #005555 70%, #006b6b 100%);">
+            <div class="absolute -bottom-8 -right-8 w-48 h-48 rounded-full bg-teal-500/12 blur-2xl"></div>
+            <div class="absolute inset-0 flex items-center justify-center select-none">
+              <div class="text-center">
+                <svg class="w-12 h-12 mx-auto mb-1" fill="none" stroke="rgba(45,212,191,0.12)" stroke-width="1" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                </svg>
+                <div class="text-3xl font-display font-black tracking-wider" style="color:rgba(255,255,255,0.05)">INNO</div>
+                <div class="text-3xl font-display font-black tracking-wider" style="color:rgba(45,212,191,0.12)">HEALTH</div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
+            <div class="absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-bold bg-teal-800/80 text-white backdrop-blur-sm tracking-wide">
+              CLIENT PROJECT
+            </div>
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 backdrop-blur-sm border border-zinc-700/50">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] text-zinc-300 font-medium">Live</span>
+            </div>
+          </div>
+
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-display font-bold text-white mb-2">InnoHealth Systems</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed mb-5 flex-1">
+              Product launch site for the Cadara Foot, a high-fidelity surgical training model for minimally invasive surgery. Patent-pending, radiopaque, and skin-wrapped for realistic tactile feedback. Built by a board-certified MIS surgeon and MIT-trained engineer.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="tag">Web Design</span>
+              <span class="tag">Client Site</span>
+              <span class="tag">MedTech</span>
+            </div>
+            <a href="https://innohealthsystems.com" target="_blank" rel="noopener noreferrer"
+               class="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors inline-flex items-center gap-1.5">
+              Visit site
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── SCALE AUDIT ─── -->
+        <div class="project-card reveal rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex flex-col" data-category="personal" style="transition-delay:0.32s">
+          <div class="relative h-52 overflow-hidden flex-shrink-0"
+               style="background: linear-gradient(135deg, #060d1a 0%, #0d2340 40%, #13375e 70%, #1a5a8a 100%);">
+            <div class="absolute -bottom-6 -right-6 w-40 h-40 rounded-full bg-blue-500/12 blur-2xl"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-center">
+                <svg class="w-14 h-14 mx-auto mb-2" fill="none" stroke="rgba(96,165,250,0.15)" stroke-width="1" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                <div class="text-4xl font-display font-black tracking-widest select-none"
+                     style="color: rgba(255,255,255,0.06)">SCALE</div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
+            <div class="absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-600/80 text-white backdrop-blur-sm tracking-wide">
+              PERSONAL PROJECT
+            </div>
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 backdrop-blur-sm border border-zinc-700/50">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] text-zinc-300 font-medium">Live</span>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-display font-bold text-white mb-2">Scale Audit</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed mb-5 flex-1">
+              AI-powered business diagnostic tool. Users complete a 20-question assessment and Claude AI generates a personalised growth report with prioritised action items, delivered by email and logged to Google Sheets.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="tag">React</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Vite</span>
+              <span class="tag">Framer Motion</span>
+              <span class="tag">Claude AI</span>
+              <span class="tag">Google Sheets</span>
+            </div>
+            <a href="https://scale-audit.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors inline-flex items-center gap-1.5">
+              Live demo
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── FIELD DASHBOARD ─── -->
+        <div class="project-card reveal rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex flex-col" data-category="personal" style="transition-delay:0.40s">
+          <div class="relative h-52 overflow-hidden flex-shrink-0"
+               style="background: linear-gradient(135deg, #1a0b00 0%, #3d1f00 40%, #7c3d12 70%, #b45309 100%);">
+            <div class="absolute bottom-0 inset-x-0 flex items-end justify-center gap-1.5 pb-6 px-8 opacity-10">
+              <div class="w-5 bg-amber-400 rounded-t" style="height:36px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:58px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:44px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:72px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:52px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:80px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:48px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:90px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:62px"></div>
+              <div class="w-5 bg-amber-400 rounded-t" style="height:76px"></div>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-center">
+                <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="rgba(251,191,36,0.15)" stroke-width="1" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                </svg>
+                <div class="text-4xl font-display font-black tracking-widest select-none"
+                     style="color:rgba(255,255,255,0.06)">FIELD</div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
+            <div class="absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-700/80 text-white backdrop-blur-sm tracking-wide">
+              PERSONAL PROJECT
+            </div>
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 backdrop-blur-sm border border-zinc-700/50">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] text-zinc-300 font-medium">Live</span>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-display font-bold text-white mb-2">Field Measurements Dashboard</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed mb-5 flex-1">
+              Custom agronomic data visualisation showing 60 days of field measurements. Dual Y-axes, interactive crosshair tooltip, temperature variance bands, rainfall bars, and colour-coded event markers, fully responsive via ResizeObserver.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="tag">React</span>
+              <span class="tag">D3.js</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Vite</span>
+            </div>
+            <a href="https://field-dashboard-seven.vercel.app" target="_blank" rel="noopener noreferrer"
+               class="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors inline-flex items-center gap-1.5">
+              Live demo
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── KICKSVAULT ─── -->
+        <div class="project-card reveal rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex flex-col" data-category="personal" style="transition-delay:0.32s">
+          <div class="relative h-52 overflow-hidden flex-shrink-0"
+               style="background: linear-gradient(135deg, #1a1000 0%, #3d2600 40%, #7a4f00 70%, #b37400 100%);">
+            <div class="absolute -bottom-8 -right-8 w-48 h-48 rounded-full bg-yellow-500/12 blur-2xl"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-center select-none">
+                <div class="text-4xl font-display font-black tracking-wider" style="color:rgba(255,255,255,0.06)">KICKS</div>
+                <div class="text-4xl font-display font-black tracking-wider" style="color:rgba(234,179,8,0.12)">VAULT</div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
+            <div class="absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-700/80 text-white backdrop-blur-sm tracking-wide">
+              PERSONAL PROJECT
+            </div>
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 backdrop-blur-sm border border-zinc-700/50">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] text-zinc-300 font-medium">Live</span>
+            </div>
+          </div>
+
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-display font-bold text-white mb-2">KicksVault</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed mb-5 flex-1">
+              Vertical SaaS platform for Nigerian premium sneaker wholesalers. Tracks every pair as an individual asset from sourcing to sale. Multi-tenant architecture with wholesaler, staff, and buyer portals. WhatsApp-native OTP checkout and naira-denominated pair-level inventory.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="tag">Next.js 14</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Turborepo</span>
+              <span class="tag">pnpm</span>
+              <span class="tag">Recharts</span>
+              <span class="tag">Tailwind CSS</span>
+            </div>
+            <a href="https://tradestack-dashboard.vercel.app/" target="_blank" rel="noopener noreferrer"
+               class="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors inline-flex items-center gap-1.5">
+              Live demo
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── FINDHOUSE ─── -->
+        <div class="project-card reveal rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex flex-col" data-category="personal" style="transition-delay:0.56s">
+          <div class="relative h-52 overflow-hidden flex-shrink-0"
+               style="background: linear-gradient(135deg, #0d1520 0%, #122035 40%, #1a3050 70%, #1e4a7a 100%);">
+            <div class="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-sky-500/10 blur-2xl"></div>
+            <div class="absolute top-6 right-6 opacity-10">
+              <svg class="w-24 h-24" fill="none" stroke="#FF5A5F" stroke-width="0.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10"/>
+              </svg>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="text-center select-none">
+                <div class="text-5xl font-display font-black tracking-wider" style="color:rgba(255,255,255,0.06)">FIND</div>
+                <div class="text-5xl font-display font-black tracking-wider" style="color:rgba(255,90,95,0.12)">HOUSE</div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
+            <div class="absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-bold bg-sky-700/80 text-white backdrop-blur-sm tracking-wide">
+              PERSONAL PROJECT
+            </div>
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 backdrop-blur-sm border border-zinc-700/50">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="text-[11px] text-zinc-300 font-medium">Live</span>
+            </div>
+          </div>
+
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-display font-bold text-white mb-2">FindHouse</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed mb-5 flex-1">
+              Full-stack real estate SPA with live for-sale and for-rent listings (RapidAPI Realtor16), rental market trend charts, and agent contact forms. Features Supabase Auth with protected routes, a three-tier property cache with 24-hour TTL, and smooth Framer Motion page transitions.
+            </p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="tag">React 19</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Supabase</span>
+              <span class="tag">RapidAPI</span>
+              <span class="tag">Recharts</span>
+              <span class="tag">Framer Motion</span>
+            </div>
+            <a href="https://findhouse-app.vercel.app/" target="_blank" rel="noopener noreferrer"
+               class="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors inline-flex items-center gap-1.5">
+              Live demo
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ SKILLS ══════════════════════════════════════ -->
+  <section id="skills" class="py-24 px-6" style="background: rgba(9,9,11,0.6)">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="reveal mb-14">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-5 h-px bg-violet-500"></div>
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-widest">What I work with</span>
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-white">Tech Stack</h2>
+        <p class="text-zinc-400 mt-3 text-base">Tools and technologies I use to bring ideas to life.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Frontend -->
+        <div class="skill-card reveal rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+          <div class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5">
+            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white mb-4 text-sm tracking-wide">Frontend</h3>
+          <ul class="space-y-2.5">
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>React 18 / Next.js 14
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>TypeScript (strict)
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>Tailwind CSS
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>Framer Motion / GSAP
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>D3.js
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>Vue 3
+            </li>
+          </ul>
+        </div>
+
+        <!-- Backend -->
+        <div class="skill-card reveal rounded-xl border border-zinc-800 bg-zinc-900/50 p-6" style="transition-delay:0.08s">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white mb-4 text-sm tracking-wide">Backend</h3>
+          <ul class="space-y-2.5">
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-emerald-500"></span>Node.js / Express
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-emerald-500"></span>Next.js API Routes
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-emerald-500"></span>PostgreSQL
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-emerald-500"></span>Drizzle ORM
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-emerald-500"></span>Redis / ioredis
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-emerald-500"></span>JWT / Auth edge
+            </li>
+          </ul>
+        </div>
+
+        <!-- AI & Integrations -->
+        <div class="skill-card reveal rounded-xl border border-zinc-800 bg-zinc-900/50 p-6" style="transition-delay:0.16s">
+          <div class="w-9 h-9 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-5">
+            <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white mb-4 text-sm tracking-wide">AI and Integrations</h3>
+          <ul class="space-y-2.5">
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>Claude AI (Anthropic)
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>Google Sheets API
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>Resend / Nodemailer
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>Cloudflare R2
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>WhatsApp API
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-violet-500"></span>QR Codes / JWT
+            </li>
+          </ul>
+        </div>
+
+        <!-- DevOps & Tools -->
+        <div class="skill-card reveal rounded-xl border border-zinc-800 bg-zinc-900/50 p-6" style="transition-delay:0.24s">
+          <div class="w-9 h-9 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-5">
+            <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white mb-4 text-sm tracking-wide">Tools and DevOps</h3>
+          <ul class="space-y-2.5">
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-orange-500"></span>Docker / Compose
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-orange-500"></span>Vercel / Render
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-orange-500"></span>Git / GitHub
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-orange-500"></span>Vite / Turbopack
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-orange-500"></span>Python / Jupyter
+            </li>
+            <li class="flex items-center gap-2.5 text-sm text-zinc-400">
+              <span class="w-1.5 h-1.5 flex-shrink-0 rounded-full bg-orange-500"></span>ESLint / Prettier
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ CONTACT ══════════════════════════════════════ -->
+  <section id="contact" class="py-24 px-6">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="reveal">
+        <div class="flex items-center justify-center gap-3 mb-3">
+          <div class="w-5 h-px bg-violet-500"></div>
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-widest">Get in touch</span>
+          <div class="w-5 h-px bg-violet-500"></div>
+        </div>
+
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+          Let's build something<br/>
+          <span class="gradient-text">together.</span>
+        </h2>
+
+        <p class="text-zinc-400 text-base md:text-lg mb-10 leading-relaxed max-w-lg mx-auto">
+          Whether you have a project in mind, need a full-stack developer, or want to explore how AI can transform your business, I would love to hear from you.
+        </p>
+
+        <a href="mailto:sakakabir88@gmail.com"
+           class="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base transition-all duration-200 hover:scale-105 active:scale-95 glow mb-8">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          sakakabir88@gmail.com
+        </a>
+
+        <p class="text-xs text-zinc-700 tracking-wide">Based in Mauritius. Available worldwide. Remote-friendly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ FOOTER ══════════════════════════════════════ -->
+  <footer class="border-t border-zinc-800/60 py-8 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-zinc-600 text-sm">© 2026 Kabir Saka. All rights reserved.</p>
+      <p class="text-zinc-700 text-xs">Built with HTML and Tailwind CSS.</p>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════ JS ══════════════════════════════════════ -->
+  <script>
+    // Mobile menu
+    const menuBtn = document.getElementById('mobile-menu-btn')
+    const mobileMenu = document.getElementById('mobile-menu')
+    const iconOpen = document.getElementById('icon-open')
+    const iconClose = document.getElementById('icon-close')
+
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.toggle('hidden')
+      iconOpen.classList.toggle('hidden', !isHidden)
+      iconClose.classList.toggle('hidden', isHidden)
+    })
+
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden')
+        iconOpen.classList.remove('hidden')
+        iconClose.classList.add('hidden')
+      })
+    })
+
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+          revealObserver.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el))
+
+    // Project filter tabs
+    const filterBtns = document.querySelectorAll('.filter-btn')
+    const projectCards = document.querySelectorAll('#projects-grid [data-category]')
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter')
+
+        filterBtns.forEach(b => {
+          b.classList.remove('active', 'bg-violet-600', 'text-white')
+          b.classList.add('text-zinc-400', 'border', 'border-zinc-800')
+        })
+        btn.classList.add('active', 'bg-violet-600', 'text-white')
+        btn.classList.remove('text-zinc-400', 'border', 'border-zinc-800')
+
+        projectCards.forEach(card => {
+          const el = card
+          const cat = el.getAttribute('data-category')
+          if (filter === 'all' || cat === filter) {
+            el.style.display = ''
+            el.style.opacity = '0'
+            el.style.transform = 'translateY(12px)'
+            requestAnimationFrame(() => {
+              el.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
+              el.style.opacity = '1'
+              el.style.transform = 'translateY(0)'
+            })
+          } else {
+            el.style.transition = 'opacity 0.2s ease'
+            el.style.opacity = '0'
+            setTimeout(() => { el.style.display = 'none' }, 200)
+          }
+        })
+      })
+    })
+
+    // Smooth nav highlight on scroll
+    const sections = document.querySelectorAll('section[id]')
+    const navLinks = document.querySelectorAll('nav a[href^="#"]')
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id')
+          navLinks.forEach(link => {
+            const isActive = link.getAttribute('href') === `#${id}`
+            link.classList.toggle('text-white', isActive)
+            link.classList.toggle('text-zinc-400', !isActive)
+          })
+        }
+      })
+    }, { threshold: 0.5 })
+
+    sections.forEach(s => sectionObserver.observe(s))
+  </script>
+
+</body>
+</html>
